@@ -17,14 +17,35 @@ We recommend using [pipenv](https://docs.pipenv.org/) to make development easier
    ```bash
    git clone https://github.com/edina/nb_empty_trash
    ```
+2. Edit the Dockerfile - change:
 
-2. Create a reference docker image:
+   ```bash
+   RUN pip install git+git://github.com/edina/nb_empty_trash.git#egg=nb_empty_trash
+   # WORKDIR /srv
+   # COPY . empty-trash
+   # RUN pip install /srv/empty-trash/
+   RUN jupyter nbextension install --sys-prefix --py empty_trash \
+      && jupyter nbextension enable empty_trash --py --sys-prefix \
+      && jupyter serverextension enable --py empty_trash --sys-prefix
+   ```
+to
+   ```bash
+   # RUN pip install git+git://github.com/edina/nb_empty_trash.git#egg=nb_empty_trash
+   WORKDIR /srv
+   COPY . empty-trash
+   RUN pip install /srv/empty-trash/
+   RUN jupyter nbextension install --sys-prefix --py empty_trash \
+      && jupyter nbextension enable empty_trash --py --sys-prefix \
+      && jupyter serverextension enable --py empty_trash --sys-prefix
+
+
+3. Create a reference docker image:
    
    ```bash
    docker build -t test .
    ```
 
-3. Start a Jupyter Notebook instance, open a new notebook and check out the usage guages
+4. Start a Jupyter Notebook instance, open a new notebook and check out the usage guages
    in the top right!
 
    ```bash
@@ -33,12 +54,12 @@ We recommend using [pipenv](https://docs.pipenv.org/) to make development easier
 
 ### Testing variations
 
-4. If you want to test and of the functionality that affects the display, you can do so
+5. If you want to test and of the functionality that affects the display, you can do so
    by setting environment variables or setting up a `jupyter_notebook_config.py` file
    (see the supplied `example_jupyter_notebook_config.py`).
 
    ```bash
-   MEM_LIMIT=$(expr 128 \* 1024 \* 1024) jupyter notebook
+   DISK_LIMIT=$(expr 128 \* 1024 \* 1024) jupyter notebook
    ```
 
 ### Developing and improving the code
@@ -46,13 +67,13 @@ We recommend using [pipenv](https://docs.pipenv.org/) to make development easier
 Before you add/change code, you need to consider testing: It's a good idea to write tests to exercise any new features,
 or that trigger any bugs that you have fixed to catch regressions.
 
-5. In your Virtual Environment, you'll need to add a bunch of pytho libraries:
+6. In your Virtual Environment, you'll need to add a bunch of python libraries:
 
    ```bash
    pip install -r requirements-dev.txt
    ```
 
-6. `pytest` is used to run the test suite. You can run the tests with:
+7. `pytest` is used to run the test suite. You can run the tests with:
 
    ```bash
    pytest -vvv empty_trash
@@ -61,8 +82,9 @@ or that trigger any bugs that you have fixed to catch regressions.
    in the repo directory.
 
 
-7. nb_empty_trash has adopted automatic code formatting so you shouldn't
-need to worry too much about your code style.
+8. nb_empty_trash has adopted automatic code formatting so you shouldn't
+need to worry too much about your code style (We use `black` and `flake8`
+if you care about such things.)
 
    As long as your code is valid, the pre-commit hook should take care of 
    how it should look. Here is how to set up pre-commit hooks for automatic
@@ -98,4 +120,4 @@ yourself after that.
 
    to see what the errors are.
 
-8. The DNBResuse repo checks every commit for linting & the the code will actually install [in a docker image].
+9. The nb_trash_empty repo checks every commit for linting & the the code will actually install [in a docker image].
