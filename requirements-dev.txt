@@ -1,0 +1,12 @@
+autopep8
+black
+flake8
+mock
+notebook
+pre-commit
+prometheus_client
+psutil>=5.6.0
+pytest
+pytest-cov>=2.6.1
+tornado
+traitlets
