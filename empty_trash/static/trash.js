@@ -131,8 +131,8 @@ define([
     };
 
     function displayDisk(data) {
-        let totalUsage = metric("total_disk_usage", data);
-        let maxUsage = metric("max_disk_usage", data);
+        let totalUsage = metric("total_home_usage", data);
+        let maxUsage = metric("max_home_usage", data);
         if (maxUsage[2] <= 0)
             return;
 

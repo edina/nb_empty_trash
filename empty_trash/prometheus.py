@@ -19,7 +19,7 @@ class PrometheusHandler(Callable):
         self.config = metricsloader.config
         self.session_manager = metricsloader.nbapp.session_manager
 
-        gauge_names = ["trash", "total_disk", "max_disk"]
+        gauge_names = ["trash", "total_home", "max_home"]
         for name in gauge_names:
             phrase = name + "_usage"
             gauge = Gauge(phrase, "counter for " + phrase.replace("_", " "), [])
@@ -32,8 +32,8 @@ class PrometheusHandler(Callable):
 
         # two values
         disk_metric_values = self.metricsloader.disk_metrics()
-        self.TOTAL_DISK_USAGE.set(disk_metric_values["disk_usage"])
-        self.MAX_DISK_USAGE.set(self.apply_disk_limit(disk_metric_values))
+        self.TOTAL_HOME_USAGE.set(disk_metric_values["disk_usage"])
+        self.MAX_HOME_USAGE.set(self.apply_disk_limit(disk_metric_values))
 
     def apply_disk_limit(self, disk_metric_values) -> Optional[str]:
         if disk_metric_values is None:
