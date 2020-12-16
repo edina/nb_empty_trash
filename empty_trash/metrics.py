@@ -10,19 +10,16 @@ class TrashMetricsLoader:
         self.config = nbapp.web_app.settings["trash_display_config"]
         self.nbapp = nbapp
 
-    def get_trash_size(self):  # , process_metrics, system_metrics):
+    def get_trash_size(self):
         root_directory = Path(self.config.trash_dir)
-        trash_usage = sum(
-            f.stat().st_size for f in root_directory.glob("**/*") if f.is_file()
-        )
+        trash_usage = 0
+        # trash_usage =sum(
+        #     f.stat().st_size for f in root_directory.glob("**/*") if f.is_file()
+        # )
         return {"trash_usage": trash_usage}
 
     # Usage is the count of files
     # total is max space on disk
     def disk_metrics(self):
-        root_directory = Path(self.config.disk_dir)
-        disk_usage = sum(
-            f.stat().st_size for f in root_directory.glob("**/*") if f.is_file()
-        )
-        disk_psutils = psutil.disk_usage(self.config.disk_dir).total
-        return {"disk_usage": disk_usage, "disk_total": disk_psutils}
+        disk_psutils = psutil.disk_usage(self.config.disk_dir)
+        return {"disk_usage": disk_psutils.used, "disk_total": disk_psutils.total}
