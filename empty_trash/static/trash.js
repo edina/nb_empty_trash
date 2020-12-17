@@ -90,7 +90,7 @@ define([
 
         if ( $('#btnDeleteTrash').length ) {
             $('#btnDeleteTrash').attr(
-                'title', 'Trash size',
+                'title', 'Trash', // size: ' + trashUsage
             )
         } else {
             $('#trash-disk-metric').append(
