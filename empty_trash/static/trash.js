@@ -12,11 +12,11 @@ define([
         const holding = $('<div>').attr('id', 'trash-display')
                             .addClass('btn-group')
                         .append(
+                            $('<div>').attr('id', 'trash-disk-size')
+                        ).append(
                         $('<div>')
                             .attr('id', 'trash-disk-metric')
                             .attr('style', 'display: inline-block')
-                        ).append(
-                        $('<div>').attr('id', 'trash-disk-size')
                         ).insertBefore($('#alternate_upload'));
 
         $('head').append(
@@ -78,25 +78,26 @@ define([
     }
 
     function displayTrashButton(data) {
-        // usage is [full match, numeric]
-        let usage = metric('trash_usage', data);
-        
+        // let trashUsage = metric('trash_usage', data);
+        // trashUsage = humanFileSize(parseFloat(trashUsage[2]));
+
         var _get_cookie = function (name) {
             // from tornado docs: http://www.tornadoweb.org/en/stable/guide/security.html
             var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
             return r ? r[1] : undefined;
         }
+        let trashUsage = metric("trash_usage", data);
 
         if ( $('#btnDeleteTrash').length ) {
             $('#btnDeleteTrash').attr(
-                'title', 'Trash size: ' + humanFileSize(parseFloat(usage[2])),
+                'title', 'Clear hidden Trash foldernyway....', // size: (' + trashUsage + ')'
             )
         } else {
             $('#trash-disk-metric').append(
                 $('<button/>', {
                     type: 'button',
                     id: 'btnDeleteTrash',
-                    title: 'Trash size: ' + humanFileSize(parseFloat(usage[2])),
+                    title: 'Clear hidden Trash folder',
                     class: 'nb_tree_buttons btn btn-default btn-xs',
                     text: 'Empty Trash'
                 }).on('click', function() {
@@ -176,8 +177,8 @@ define([
             dataType: "text",
             url: utils.get_body_data('baseUrl') + 'metrics',
             success: function(data) {
-                displayTrashButton(data);
                 displayDisk(data);
+                displayTrashButton(data);
         }});
     };
 
