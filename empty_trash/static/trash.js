@@ -90,7 +90,7 @@ define([
 
         if ( $('#btnDeleteTrash').length ) {
             $('#btnDeleteTrash').attr(
-                'title', 'Empty Trash', // size: (' + trashUsage + ')'
+                'title', 'Clear hidden Trash folder', // size: (' + trashUsage + ')'
             )
         } else {
             $('#trash-disk-metric').append(
