@@ -90,7 +90,7 @@ define([
 
         if ( $('#btnDeleteTrash').length ) {
             $('#btnDeleteTrash').attr(
-                'title', 'Clear hidden Trash folder', // size: (' + trashUsage + ')'
+                'title', 'Clear hidden Trash foldernyway....', // size: (' + trashUsage + ')'
             )
         } else {
             $('#trash-disk-metric').append(
@@ -99,7 +99,7 @@ define([
                     id: 'btnDeleteTrash',
                     title: 'Clear hidden Trash folder',
                     class: 'nb_tree_buttons btn btn-default btn-xs',
-                    text: 'Trash'
+                    text: 'Empty Trash'
                 }).on('click', function() {
                     dialog.modal({
                         title : 'Empty Trash',
