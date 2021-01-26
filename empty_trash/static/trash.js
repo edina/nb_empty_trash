@@ -163,7 +163,7 @@ define([
                 $('<span>').text(' ')
                 .attr('class', 'trash-common_bar trash-disk_bar')
             )
-        $('.nbresuse-disk_bar')
+        $('.trash-disk_bar')
             .css('width', percentage)
             .css('background', colour);
     };
