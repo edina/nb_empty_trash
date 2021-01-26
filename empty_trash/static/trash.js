@@ -90,7 +90,7 @@ define([
 
         if ( $('#btnDeleteTrash').length ) {
             $('#btnDeleteTrash').attr(
-                'title', 'Clear hidden Trash foldernyway....', // size: (' + trashUsage + ')'
+                'title', 'Clear hidden Trash folder', // size: (' + trashUsage + ')'
             )
         } else {
             $('#trash-disk-metric').append(
@@ -142,15 +142,14 @@ define([
         let colour = percentage > 100 ? '#800000' :
             percentage > 90 ? '#ff3333' :
             percentage > 75 ? '#ff944d' : '#84e184';
+
         percentage = percentage > 100 ? 100 : percentage;  // cap at 100 percent
         percentage = percentage.toFixed(2) + '%';
-
 
         totalUsage = humanFileSize(parseFloat(totalUsage[2]));
         maxUsage = humanFileSize(parseFloat(maxUsage[2]));
 
         var display = totalUsage + "/" + maxUsage;
-
         $('#trash-disk-size')
             .text( 'Disk')
             .css('display', 'inline-block')
@@ -161,7 +160,7 @@ define([
                 $('<span>').text(' ')
                 .attr('class', 'trash-common_bar trash-disk_bar')
             )
-        $('.nbresuse-disk_bar')
+        $('.trash-disk_bar')
             .css('width', percentage)
             .css('background', colour);
     };
