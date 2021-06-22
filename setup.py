@@ -11,7 +11,7 @@ README = (HERE / "README.md").read_text()
 
 setuptools.setup(
     name="empty-trash",
-    version="0.1.0",
+    version="0.2.2",
     url="https://github.com/edina/nb_empty_trash",
     author="ian Stuart",
     description="Simple Jupyter extension to show the size of the trash folder, and a button the empty it.",
