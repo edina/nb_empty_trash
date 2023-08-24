@@ -77,63 +77,9 @@ define([
             return matches;
     }
 
-    function displayTrashButton(data) {
-        // let trashUsage = metric('trash_usage', data);
-        // trashUsage = humanFileSize(parseFloat(trashUsage[2]));
-
-        var _get_cookie = function (name) {
-            // from tornado docs: http://www.tornadoweb.org/en/stable/guide/security.html
-            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-            return r ? r[1] : undefined;
-        }
-        let trashUsage = metric("trash_usage", data);
-
-        if ( $('#btnDeleteTrash').length ) {
-            $('#btnDeleteTrash').attr(
-                'title', 'Clear hidden Trash folder', // size: (' + trashUsage + ')'
-            )
-        } else {
-            $('#trash-disk-metric').append(
-                $('<button/>', {
-                    type: 'button',
-                    id: 'btnDeleteTrash',
-                    title: 'Clear hidden Trash folder',
-                    class: 'nb_tree_buttons btn btn-default btn-xs',
-                    text: 'Empty Trash'
-                }).on('click', function() {
-                    dialog.modal({
-                        title : 'Empty Trash',
-                        body : 'Are you sure you want the empty all of Trash?',
-                        default_button: "Cancel",
-                        buttons : {
-                            Cancel: {},
-                            Delete : {
-                                class: "btn-danger",
-                                click: function() {
-                                    $.ajax({
-                                        crossDomain : true,
-                                        type: 'DELETE',
-                                        url: utils.get_body_data('baseUrl') + 'del_trash',
-                                        beforeSend: function (xhr) {
-                                            /* Authorization header */
-                                            xhr.setRequestHeader('X-XSRFToken', _get_cookie('_xsrf'));
-                                        },
-                                        success: function(result) {
-                                            console.warn('Trash Cleared');
-                                            // Do something with the result
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    });
-                })
-        )};
-    };
-
     function displayDisk(data) {
-        let totalUsage = metric("total_home_usage", data);
-        let maxUsage = metric("max_home_usage", data);
+        let totalUsage = metric("total_disk_usage", data);
+        let maxUsage = metric("max_disk_usage", data);
         if (maxUsage[2] <= 0)
             return;
 
@@ -177,7 +123,6 @@ define([
             url: utils.get_body_data('baseUrl') + 'metrics',
             success: function(data) {
                 displayDisk(data);
-                displayTrashButton(data);
         }});
     };
 
