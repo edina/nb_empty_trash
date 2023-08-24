@@ -1,21 +1,17 @@
 repos:
-- repo: https://github.com/asottile/reorder_python_imports
-  rev: v1.3.5
-  hooks:
-  - id: reorder-python-imports
-    language_version: python3.8
-- repo: https://github.com/ambv/black
-  rev: 18.9b0
-  hooks:
-  - id: black
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.1.0
-  hooks:
-  - id: end-of-file-fixer
-  - id: check-json
-  - id: check-yaml
-    exclude: ^helm-chart/nbviewer/templates/
-  - id: check-case-conflict
-  - id: check-executables-have-shebangs
-  - id: requirements-txt-fixer
-  - id: flake8
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: isort (python)
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        args: [--line-length=120]
+        language_version: python3
+  - repo: https://github.com/PyCQA/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+

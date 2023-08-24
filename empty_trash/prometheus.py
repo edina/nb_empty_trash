@@ -19,16 +19,13 @@ class PrometheusHandler(Callable):
         self.config = metricsloader.config
         self.session_manager = metricsloader.nbapp.session_manager
 
-        gauge_names = ["trash", "total_home", "max_home"]
+        gauge_names = ["total_home", "max_home"]
         for name in gauge_names:
             phrase = name + "_usage"
             gauge = Gauge(phrase, "counter for " + phrase.replace("_", " "), [])
             setattr(self, phrase.upper(), gauge)
 
     async def __call__(self, *args, **kwargs):
-        # just one value
-        trash = self.metricsloader.get_trash_size()
-        self.TRASH_USAGE.set(trash["trash_usage"])
 
         # two values
         disk_metric_values = self.metricsloader.disk_metrics()
@@ -41,9 +38,7 @@ class PrometheusHandler(Callable):
         else:
             if callable(self.config.disk_limit):
 
-                return self.config.disk_limit(
-                    disk_usage=disk_metric_values["disk_usage"]
-                )
+                return self.config.disk_limit(disk_usage=disk_metric_values["disk_usage"])
             elif self.config.disk_limit > 0:  # disk_limit is an Int
                 return self.config.disk_limit
             else:
